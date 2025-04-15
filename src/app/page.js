@@ -1,14 +1,12 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
-// app/page.jsx
-//import { fetchEntries } from './contentful';
 
+
+//////////////CONTENTFUL DATA FETCHING//////////////
 // If you want ISR, export a revalidate value (in seconds)
 // This tells Next.js to regenerate the page at most once every 60 seconds.
-export const revalidate = 60;
-
-// Import any necessary libraries (if needed)
+//export const revalidate = 60;
 
 async function fetchEntries(contentType) {
   // Replace the URL and parameters with your actual Contentful endpoint and credentials.
@@ -22,6 +20,9 @@ async function fetchEntries(contentType) {
   // Adjust the return based on your API shape. You might need to access data.items, for example.
   return data.items; 
 }
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 export default async function Home() {
   // // Fetch Contentful data on the server
@@ -29,8 +30,12 @@ export default async function Home() {
   
   return (
     <div className="wrapper">
-      <p>{entries[0].fields.hello}</p>
-      <p className="subtitle">{entries[0].fields.subtitle}</p>
+      {entries.map((entry) => (
+        <div className="content" key={entry.sys.id}>
+          <p>{entry.fields.hello}</p>
+          <p className="subtitle">{entry.fields.subtitle}</p>
+        </div>
+      ))}
     </div>
   );
 
